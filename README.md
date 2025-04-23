@@ -6,50 +6,50 @@
 ---
 
 ## 1. Executive Summary
-In the dynamic financial sector, real-time transaction processing and fraud detection are paramount for operational resilience and regulatory adherence. This technical implementation guide outlines the design and deployment of an enterprise-grade ETL (Extract, Transform, Load) pipeline utilizing [Microsoft Azure Cloud Services](https://learn.microsoft.com/en-us/azure/). Built on Azure’s scalable infrastructure and aligned with AZ-900 foundational concepts, this solution integrates real-time streaming, batch processing, and advanced analytics to deliver actionable insights.
+In the fast-paced financial industry, real-time transaction processing and fraud detection are critical for maintaining operational resilience and ensuring regulatory compliance. This guide details the design and deployment of an enterprise-grade ETL (Extract, Transform, Load) pipeline using Microsoft Azure Cloud Services. Built on Azure’s scalable infrastructure and aligned with AZ-900 foundational concepts, this solution combines real-time streaming, batch processing, and advanced analytics to provide actionable insights.
 
-Key objectives include:
-- **Scalability**: Processing high-velocity data using Azure’s elastic cloud services.
-- **Security**: Safeguarding sensitive financial data with Azure’s robust security features.
-- **Compliance**: Meeting regulatory standards like GDPR through Azure’s compliance offerings.
-- **Cost Optimization**: Leveraging Azure’s pricing models for efficient resource utilization.
+Key objectives include:  
+- **Scalability**: Handle high-velocity data with Azure’s elastic cloud services.  
+- **Security**: Protect sensitive financial data using Azure’s robust security features.  
+- **Compliance**: Adhere to regulations like GDPR with Azure’s compliance tools.  
+- **Cost Optimization**: Utilize Azure’s pricing models for efficient resource use.  
 
-This document provides a structured roadmap, including architecture, implementation phases, governance, and a 6-week Minimum Viable Product (MVP) plan, with references to AZ-900 exam domains for alignment with Azure fundamentals.
+This document offers a structured roadmap, covering architecture, implementation phases, governance, and a 6-week Minimum Viable Product (MVP) plan.
 
 ---
 
 ## 2. Table of Contents
-1. [Executive Summary](#1-executive-summary)
-2. [Table of Contents](#2-table-of-contents)
-3. [Azure Cloud Benefits](#3-azure-cloud-benefits)
-4. [Technology Stack Overview](#4-technology-stack-overview)
-5. [Solution Architecture](#5-solution-architecture)
-6. [Implementation Phases](#6-implementation-phases)
-   - [Phase 1: Bronze Layer - Data Ingestion](#61-phase-1-bronze-layer---data-ingestion)
-   - [Phase 2: Silver Layer - Data Transformation](#62-phase-2-silver-layer---data-transformation)
-   - [Phase 3: Gold Layer - Data Analytics](#63-phase-3-gold-layer---data-analytics)
-7. [Security, Privacy, and Compliance](#7-security-privacy-and-compliance)
-8. [Cost Management and Pricing](#8-cost-management-and-pricing)
-9. [Operational Monitoring](#9-operational-monitoring)
-10. [MVP Development Plan](#10-mvp-development-plan)
-11. [Conclusion](#11-conclusion)
-12. [References](#12-references)
+1. [Executive Summary](#1-executive-summary)  
+2. [Table of Contents](#2-table-of-contents)  
+3. [Azure Cloud Benefits](#3-azure-cloud-benefits)  
+4. [Technology Stack Overview](#4-technology-stack-overview)  
+5. [Solution Architecture](#5-solution-architecture)  
+6. [Implementation Phases](#6-implementation-phases)  
+   - [Phase 1: Bronze Layer - Data Ingestion](#61-phase-1-bronze-layer---data-ingestion)  
+   - [Phase 2: Silver Layer - Data Transformation](#62-phase-2-silver-layer---data-transformation)  
+   - [Phase 3: Gold Layer - Data Analytics](#63-phase-3-gold-layer---data-analytics)  
+7. [Security, Privacy, and Compliance](#7-security-privacy-and-compliance)  
+8. [Cost Management and Pricing](#8-cost-management-and-pricing)  
+9. [Operational Monitoring](#9-operational-monitoring)  
+10. [MVP Development Plan](#10-mvp-development-plan)  
+11. [Conclusion](#11-conclusion)  
+12. [References](#12-references)  
 
 ---
 
 ## 3. Azure Cloud Benefits
-Microsoft Azure, a leader in public cloud platforms, provides a comprehensive suite of services aligned with AZ-900 domains:
-- **Cloud Concepts**: Offers Infrastructure as a Service (IaaS), Platform as a Service (PaaS), and Software as a Service (SaaS) for flexibility and scalability.
-- **Core Azure Services**: Includes compute (Azure Functions), storage (Azure SQL Database), and data integration (Azure Data lingerFactory).
-- **Security and Compliance**: Features encryption, identity management, and compliance with global standards.
-- **Pricing Models**: Provides pay-as-you-go and reserved instances for cost efficiency.
+Microsoft Azure provides a robust platform for this solution, offering:  
+- **Cloud Concepts**: Flexible IaaS, PaaS, and SaaS options for scalability.  
+- **Core Services**: Compute (Azure Functions), storage (Azure SQL Database), and data integration (Azure Data Factory).  
+- **Security and Compliance**: Encryption, identity management, and global compliance standards.  
+- **Pricing Models**: Pay-as-you-go and reserved instances for cost efficiency.  
 
-This pipeline leverages these benefits to ensure high availability, resilience, and economic scalability for financial workloads.
+These features ensure high availability, resilience, and scalability for financial workloads.
 
 ---
 
 ## 4. Technology Stack Overview
-The solution integrates on-premises and Azure services, mapped to AZ-900 core services:
+The solution integrates on-premises and Azure services:
 
 | **Component**                 | **Azure Service Category** | **Purpose**                                      |
 |-------------------------------|----------------------------|--------------------------------------------------|
@@ -83,70 +83,68 @@ graph TD
 ```
 
 ### 5.2 Core Components
-- **Azure Event Hubs**: A PaaS offering for ingesting millions of events per second, enabling real-time data streaming.
-- **Azure Functions**: A serverless compute service for event-driven fraud detection, auto-scaling to demand.
-- **Azure Data Factory**: A fully managed data integration service orchestrating ETL processes.
-- **Azure SQL Database**: A PaaS relational database with high availability and built-in security.
+- **Azure Event Hubs**: Ingests millions of events per second for real-time streaming.  
+- **Azure Functions**: Serverless compute for event-driven fraud detection.  
+- **Azure Data Factory**: Manages ETL workflows.  
+- **Azure SQL Database**: Stores transformed data with high availability.
 
 ---
 
 ## 6. Implementation Phases
 
 ### 6.1 Phase 1: Bronze Layer - Data Ingestion
-**Objective**: Ingest raw data from on-premises systems into Azure.  
+**Objective**: Ingest raw data into Azure.  
 **Key Services**: Azure Event Hubs, Azure-SSIS Integration Runtime  
 **Steps**:  
-1. Configure Change Data Capture (CDC) on SQL Server to stream transaction changes.
-2. Deploy Azure Event Hubs for real-time ingestion (16 partitions for scalability).
-3. Use Azure-SSIS Integration Runtime to lift and shift legacy SSIS packages for batch processing.
+1. Set up Change Data Capture (CDC) on SQL Server for transaction streaming.  
+2. Deploy Azure Event Hubs with 16 partitions for scalability.  
+3. Use Azure-SSIS Integration Runtime to migrate legacy SSIS packages for batch processing.
 
 ### 6.2 Phase 2: Silver Layer - Data Transformation
-**Objective**: Validate and enrich ingested data.  
+**Objective**: Validate and enrich data.  
 **Key Services**: Azure Data Factory, Azure Functions  
 **Steps**:  
-1. Implement Azure Data Factory pipelines for schema validation and data cleansing.
-2. Use Azure Functions to apply real-time fraud detection rules (e.g., risk scoring).
-3. Store transformed data in Azure SQL Database.
+1. Build Azure Data Factory pipelines for data cleansing and validation.  
+2. Apply real-time fraud detection rules with Azure Functions (e.g., risk scoring).  
+3. Store results in Azure SQL Database.
 
 ### 6.3 Phase 3: Gold Layer - Data Analytics
-**Objective**: Aggregate data and deliver insights.  
+**Objective**: Deliver aggregated insights.  
 **Key Services**: Azure SQL Database, Power BI Embedded  
 **Steps**:  
-1. Design a dimensional model with fact and dimension tables.
-2. Load aggregated data using Azure Data Factory.
-3. Embed Power BI reports for real-time transaction and fraud analytics.
+1. Create a dimensional model with fact and dimension tables.  
+2. Load aggregated data via Azure Data Factory.  
+3. Embed Power BI reports for real-time analytics.
 
 ---
 
 ## 7. Security, Privacy, and Compliance
-Aligned with AZ-900 security and compliance domains, the pipeline incorporates:
-- **Encryption**: Transparent Data Encryption (TDE) on Azure SQL Database secures data at rest.
-- **Identity Management**: Azure Role-Based Access Control (RBAC) restricts access to authorized roles.
-- **Compliance**: Azure Purview tracks data lineage, supporting GDPR and financial regulations.
-- **Monitoring**: Azure Monitor logs operations for auditability.
+- **Encryption**: Transparent Data Encryption (TDE) secures data at rest in Azure SQL Database.  
+- **Identity Management**: Azure RBAC restricts access to authorized users.  
+- **Compliance**: Azure Purview ensures data lineage for GDPR and financial regulations.  
+- **Monitoring**: Azure Monitor logs operations for audits.
 
 ---
 
 ## 8. Cost Management and Pricing
-Per AZ-900 pricing and support concepts:
-- **Pay-as-You-Go**: Azure Functions and Event Hubs scale costs with usage.
-- **Reserved Instances**: Azure SQL Database reserved capacity reduces long-term costs.
-- **Cost Management Tools**: Azure Cost Management tracks and optimizes spending.
-- **Optimization**: Serverless services and query tuning minimize resource consumption.
+- **Pay-as-You-Go**: Scales costs with usage for Azure Functions and Event Hubs.  
+- **Reserved Instances**: Reduces costs for Azure SQL Database.  
+- **Cost Management Tools**: Azure Cost Management optimizes spending.  
+- **Optimization**: Serverless services and query tuning lower resource use.
 
 ---
 
 ## 9. Operational Monitoring
-Using Azure Monitor (AZ-900 management tools):
-- **Metrics**: Track CPU, memory, and latency across services.
-- **Alerts**: Configure thresholds for proactive incident response.
-- **Diagnostics**: Application Insights provides detailed debugging for Azure Functions.
+Using Azure Monitor:  
+- **Metrics**: Monitor CPU, memory, and latency.  
+- **Alerts**: Set thresholds for proactive responses.  
+- **Diagnostics**: Application Insights debugs Azure Functions.
 
 ---
 
 ## 10. MVP Development Plan
 ### 10.1 Scope
-Deliver core ETL and fraud detection functionality in 6 weeks (30 days).
+Deliver core ETL and fraud detection in 6 weeks (30 days).
 
 ### 10.2 Task Breakdown
 | **Task**                       | **Duration (Days)** | **Azure Service**         |
@@ -164,13 +162,13 @@ Deliver core ETL and fraud detection functionality in 6 weeks (30 days).
 ---
 
 ## 11. Conclusion
-This guide presents a professional, AZ-900-aligned implementation of an ETL pipeline for financial analytics and fraud detection. By leveraging Azure’s cloud services, security features, and pricing models, it delivers a scalable, secure, and cost-effective solution tailored to enterprise needs.
+This guide outlines a scalable, secure, and cost-effective ETL pipeline for financial analytics and fraud detection, leveraging Azure’s cloud capabilities. It aligns with AZ-900 concepts, making it ideal for enterprise deployment.
 
 ---
 
 ## 12. References
-- [Microsoft Azure Documentation](https://learn.microsoft.com/en-us/azure/)
-- [AZ-900 Exam Overview](https://learn.microsoft.com/en-us/certifications/exams/az-900)
-- [Azure Event Hubs](https://learn.microsoft.com/en-us/azure/event-hubs/)
-- [Azure Data Factory](https://learn.microsoft.com/en-us/azure/data-factory/)
+- [Microsoft Azure Documentation](https://learn.microsoft.com/en-us/azure/)  
+- [AZ-900 Exam Overview](https://learn.microsoft.com/en-us/certifications/exams/az-900)  
+- [Azure Event Hubs](https://learn.microsoft.com/en-us/azure/event-hubs/)  
+- [Azure Data Factory](https://learn.microsoft.com/en-us/azure/data-factory/)  
 - [Azure Compliance Offerings](https://learn.microsoft.com/en-us/azure/compliance/)
